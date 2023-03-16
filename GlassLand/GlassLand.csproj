@@ -105,6 +105,9 @@
     <Compile Include="views\CreateMaster.xaml.cs">
       <DependentUpon>CreateMaster.xaml</DependentUpon>
     </Compile>
+    <Compile Include="views\CreateMeasurement.xaml.cs">
+      <DependentUpon>CreateMeasurement.xaml</DependentUpon>
+    </Compile>
     <Compile Include="views\CreateMeasurer.xaml.cs">
       <DependentUpon>CreateMeasurer.xaml</DependentUpon>
     </Compile>
@@ -162,6 +165,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="views\CreateMaster.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="views\CreateMeasurement.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

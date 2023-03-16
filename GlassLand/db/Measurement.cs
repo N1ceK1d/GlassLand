@@ -63,6 +63,22 @@ namespace GlassLand.db
             }
         }
 
+        public static void removeMeasurment(int Id)
+        {
+            using (var connection = Db.Connect())
+            {
+                connection.Open();
+                var measurers = new List<Measurement>();
+
+                var sql = @"DELETE FROM Measurements Where ID = " + Id + ";";
+
+                var command = new SqlCommand(sql, connection);
+
+                var reader = command.ExecuteReader();
+
+                reader.Close();
+            }
+        }
 
         public static List<Measurement> Find()
         {

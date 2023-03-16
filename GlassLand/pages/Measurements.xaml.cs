@@ -23,12 +23,10 @@ namespace GlassLand.pages
     /// </summary>
     public partial class Measurements : Page
     {
-        public ObservableCollection<Measurement> measurements { get; }
+        public ObservableCollection<Measurement> measurements { get; set; }
         public Measurements()
         {
             InitializeComponent();
-
-
             
             measurements = new ObservableCollection<Measurement>(Measurement.Find());
             measurementsList.ItemsSource = measurements;
@@ -52,10 +50,40 @@ namespace GlassLand.pages
             {
                 MessageBox.Show("Please select measure to create order");
             }
-
-
         }
 
+        public void RefreshMeasurementList()
+        {
+            measurements = new ObservableCollection<Measurement>(Measurement.Find());
+            measurementsList.ItemsSource = measurements;
+        }
 
+        private void newCustomer_Click(object sender, RoutedEventArgs e)
+        {
+            var view = new CreateMeasurement();
+
+            if (view.ShowDialog() == null)
+            {
+                MessageBox.Show("Error");
+            }
+
+            RefreshMeasurementList();
+        }
+
+        private void removeCustomer_Click(object sender, RoutedEventArgs e)
+        {
+            var m = this.measurementsList.SelectedItem as Measurement;
+
+            if (m != null)
+            {
+                Measurement.removeMeasurment(m.Id);
+
+                MainMenu.measurementsView.RefreshMeasurementList();
+            }
+            else
+            {
+                MessageBox.Show("Please select measurement to remove customer");
+            }
+        }
     }
 }
