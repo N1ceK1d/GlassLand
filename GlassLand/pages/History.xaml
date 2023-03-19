@@ -12,7 +12,7 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="50" />
             <RowDefinition Height="*" />
-            <RowDefinition Height="50" />
+            <RowDefinition Height="70" />
         </Grid.RowDefinitions>
         <TextBlock Grid.Row="0" FontSize="20" HorizontalAlignment="Center">History</TextBlock>
         <ListView  Grid.Row="1" x:Name="historyList" HorizontalContentAlignment="Stretch" HorizontalAlignment="Stretch"
@@ -21,25 +21,59 @@
             <ListView.View >
                 <GridView >
                     <GridViewColumn
+                        DisplayMemberBinding="{Binding CustomerName}"
                         Header="Customer" />
                     <GridViewColumn
+                        DisplayMemberBinding="{Binding Address}"
                         Header="Address" />
                     <GridViewColumn
+                        DisplayMemberBinding="{Binding MasterName}"
                         Header="Master" />
                     <GridViewColumn
+                        DisplayMemberBinding="{Binding MeasurerName}"
                         Header="Measurer" />
                     <GridViewColumn
+                        DisplayMemberBinding="{Binding Window}"
                         Header="Window" />
                     <GridViewColumn
-                        Header="Window Height" />
+                        DisplayMemberBinding="{Binding WindowHeight}"
+                        Header="Height" />
                     <GridViewColumn
-                        Header="Window Width" />
+                        DisplayMemberBinding="{Binding WindowWidth}"
+                        Header="Width" />
                     <GridViewColumn
+                        DisplayMemberBinding="{Binding Status}"
                         Header="Status" />
                     <GridViewColumn
+                        DisplayMemberBinding="{Binding Date}"
                         Header="Date" />
                 </GridView>
             </ListView.View>
         </ListView>
+        <Grid Grid.Row="2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="10"/>
+                <ColumnDefinition Width="150"/>
+                <ColumnDefinition Width="10"/>
+                <ColumnDefinition Width="150"/>
+                <ColumnDefinition Width="10"/>
+                <ColumnDefinition Width="150"/>
+                <ColumnDefinition Width="10"/>
+                <ColumnDefinition Width="150"/>
+                <ColumnDefinition Width="10"/>
+                <ColumnDefinition Width="150"/>
+                <ColumnDefinition Width="10"/>
+            </Grid.ColumnDefinitions>
+            <Button x:Name="CreateReport" Grid.Column="1" Click="CreateReport_Click" Content="Create Report" />
+            <ComboBox
+            Grid.Column="3"
+            x:Name="StatusItems"
+            materialDesign:HintAssist.Hint="Status"
+            Style="{StaticResource MaterialDesignOutlinedComboBox}"
+             />
+            <Button x:Name="FilterItems" Grid.Column="5" Click="FilterItems_Click" Content="Filter" />
+            <TextBlock x:Name="CompletedCount" Grid.Column="7" FontSize="20" HorizontalAlignment="Center" VerticalAlignment="Center">Completed: 0</TextBlock>
+            <TextBlock x:Name="CanceledCount" Grid.Column="9" FontSize="20" HorizontalAlignment="Center" VerticalAlignment="Center">Canceled: 0</TextBlock>
+        </Grid>
     </Grid>
 </Page>

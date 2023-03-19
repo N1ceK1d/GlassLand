@@ -59,7 +59,7 @@ namespace GlassLand.pages
             }
             else
             {
-                MessageBox.Show("Please select measure to remove master");
+                MessageBox.Show("Please select measure to remove measurer");
             }
         }
     }

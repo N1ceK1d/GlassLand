@@ -50,26 +50,50 @@ namespace GlassLand.db
             }
         }
 
-
-        public static List<History> Find()
+        public int getCount(string Status)
         {
             using (var connection = Db.Connect())
             {
                 connection.Open();
-                var histories = new List<History>();
+                var histories = new List<db.History>();
+
+                var sql = $@"SELECT COUNT(Status) FROM History as h Where Status = '{Status}'";
+
+                var command = new SqlCommand(sql, connection);
+
+                var reader = command.ExecuteReader();
+
+                int count = 0;
+
+                while (reader.Read())
+                {
+                    count = reader.GetInt32(0);
+                }
+
+                reader.Close();
+
+                return count;
+            }
+        }
+        public static List<db.History> Find()
+        {
+            using (var connection = Db.Connect())
+            {
+                connection.Open();
+                var histories = new List<db.History>();
 
                 var sql = @"SELECT 
-h.Id as Id,
-h.CustomerName as CustomerName,
-h.Address as Address,
-h.MasterName as MasterName,
-h.MeasurerName as MeasurerName,
-h.Window as Window,
-h.WindowHeight as WindowHeight,
-h.WindowWidth as WindowWidth,
-h.Status as Status,
-h.Date as Date
- FROM History as h;";
+Id,
+CustomerName,
+Address,
+MasterName,
+MeasurerName,
+Window,
+WindowHeight,
+WindowWidth,
+Status,
+Date
+FROM History;";
 
                 var command = new SqlCommand(sql, connection);
 
@@ -77,7 +101,7 @@ h.Date as Date
 
                 while (reader.Read())
                 {
-                    histories.Add(new History
+                    histories.Add(new db.History
                     {
                         CustomerName = reader.GetString(1),
                         Address = reader.GetString(2),

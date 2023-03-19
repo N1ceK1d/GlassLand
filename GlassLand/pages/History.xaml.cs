@@ -23,11 +23,26 @@ namespace GlassLand.pages
     public partial class History : Page
     {
         public ObservableCollection<db.History> history { get; set; }
+        public db.History historyItem = new db.History();
         public History()
         {
             InitializeComponent();
             history = new ObservableCollection<db.History>(db.History.Find());
             historyList.ItemsSource = history;
+            CompletedCount.Text = $"Completed: {historyItem.getCount("Complete")}";
+            CanceledCount.Text = $"Canceled: {historyItem.getCount("Cancel")}";
+            List<string> items = new List<string>() { "All", "Completed", "Canceled" };
+            StatusItems.ItemsSource = items;
+        }
+
+        private void CreateReport_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void FilterItems_Click(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }
