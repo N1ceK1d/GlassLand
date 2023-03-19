@@ -37,7 +37,7 @@ namespace GlassLand.views
         {
 
 
-            var order = new Montage()
+            var customer = new Montage()
             {
                 Master = masterTb.Text,
                 Window = windowTb.Text,
@@ -46,7 +46,7 @@ namespace GlassLand.views
                 Date = (dateTb.SelectedDate != null) ? (DateTime)dateTb.SelectedDate : DateTime.Now,
             };
 
-            order.Save();
+            customer.Save();
 
             this.DialogResult = true;
             return;

@@ -1,4 +1,5 @@
 ﻿using GlassLand.db;
+using GlassLand.pages;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -22,14 +23,30 @@ namespace GlassLand.views
     /// </summary>
     public partial class CreateMeasurement : System.Windows.Window
     {
+        public List<Measurer> Measurers { get; set; }
         public CreateMeasurement()
         {
             InitializeComponent();
+            DataContext = this;
+
+            Measurers = Measurer.Find();
         }
 
         private void creatCustomerBtn_Click(object sender, RoutedEventArgs e)
         {
+            var customer = new Measurement()
+            {
+                CustomerName = customerName.Text,
+                Measurer = measurerTb.Text,
+                WindowHeight = Convert.ToInt32(windowHeight.Text),
+                WindowWidth = Convert.ToInt32(windowWidth.Text),
+                Address = address.Text,
+                Date = (dateTb.SelectedDate != null) ? (DateTime)dateTb.SelectedDate : DateTime.Now,
+            };
 
+            customer.addMeasurment();
+
+            MainMenu.measurementsView.RefreshMeasurementList();
         }
     }
 }

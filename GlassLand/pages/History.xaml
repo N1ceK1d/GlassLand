@@ -15,7 +15,7 @@
             <RowDefinition Height="50" />
         </Grid.RowDefinitions>
         <TextBlock Grid.Row="0" FontSize="20" HorizontalAlignment="Center">History</TextBlock>
-        <ListView  Grid.Row="1" x:Name="measurementsList" HorizontalContentAlignment="Stretch" HorizontalAlignment="Stretch"
+        <ListView  Grid.Row="1" x:Name="historyList" HorizontalContentAlignment="Stretch" HorizontalAlignment="Stretch"
                    ScrollViewer.HorizontalScrollBarVisibility="Disabled"
   >
             <ListView.View >
@@ -23,17 +23,21 @@
                     <GridViewColumn
                         Header="Customer" />
                     <GridViewColumn
+                        Header="Address" />
+                    <GridViewColumn
                         Header="Master" />
-                    <GridViewColumn
-                        Header="Width" />
-                    <GridViewColumn
-                        Header="Height" />
                     <GridViewColumn
                         Header="Measurer" />
                     <GridViewColumn
-                        Header="Date" />
+                        Header="Window" />
                     <GridViewColumn
-                        Header="Address" />
+                        Header="Window Height" />
+                    <GridViewColumn
+                        Header="Window Width" />
+                    <GridViewColumn
+                        Header="Status" />
+                    <GridViewColumn
+                        Header="Date" />
                 </GridView>
             </ListView.View>
         </ListView>

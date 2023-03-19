@@ -10,7 +10,7 @@
 
     <StackPanel Margin="50 20">
         <TextBox
-            x:Name="masterName"
+            x:Name="customerName"
             Style="{StaticResource MaterialDesignOutlinedTextBox}"
             materialDesign:HintAssist.Hint="Name" Margin="0 10"
              />
@@ -23,6 +23,11 @@
             x:Name="windowHeight"
             Style="{StaticResource MaterialDesignOutlinedTextBox}"
             materialDesign:HintAssist.Hint="Height" Margin="0 10"
+             />
+        <TextBox
+            x:Name="address"
+            Style="{StaticResource MaterialDesignOutlinedTextBox}"
+            materialDesign:HintAssist.Hint="Address" Margin="0 10"
              />
         <ComboBox
             x:Name="measurerTb"

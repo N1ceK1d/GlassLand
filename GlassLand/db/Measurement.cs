@@ -12,7 +12,7 @@ namespace GlassLand.db
    
     public class Measurement
     {
-        public int Id { get; set; }
+        public int Id { get; set; } 
         public string CustomerName { get; set; }
         public double WindowWidth { get; set; }
         public double WindowHeight { get; set; }
@@ -60,6 +60,49 @@ namespace GlassLand.db
 
                 return measurement;
 
+            }
+        }
+
+        public  bool addMeasurment()
+        {
+            using (var connection = Db.Connect())
+            {
+                connection.Open();
+                var sql = $"SELECT Id FROM Employeers WHERE Name = '{Measurer}'";
+                var command = new SqlCommand(sql, connection);
+                var reader = command.ExecuteReader();
+                int measurerId = -1;
+
+                while (reader.Read())
+                {
+                    measurerId = reader.GetInt32(0);
+                }
+
+                if (measurerId == -1)
+                {
+                    reader.Close();
+                    return false;
+                }
+
+                reader.Close();
+
+                string now_date = Date.ToString().Replace('.', '/');
+
+                sql = $@"SET DATEFORMAT dmy;
+                    INSERT INTO Measurements 
+                    VALUES (
+                    '{CustomerName}', {measurerId}, {WindowWidth}, {WindowHeight}, '{Address}', '{now_date}'
+                    );
+                    ";
+
+                command = new SqlCommand(sql, connection);
+                if (command.ExecuteNonQuery() > 0)
+                {
+                    reader.Close();
+                    return true;
+                }
+                reader.Close();
+                return false;
             }
         }
 

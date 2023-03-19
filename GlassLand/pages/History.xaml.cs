@@ -1,5 +1,7 @@
-﻿using System;
+﻿using GlassLand.db;
+using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -20,9 +22,12 @@ namespace GlassLand.pages
     /// </summary>
     public partial class History : Page
     {
+        public ObservableCollection<db.History> history { get; set; }
         public History()
         {
             InitializeComponent();
+            history = new ObservableCollection<db.History>(db.History.Find());
+            historyList.ItemsSource = history;
         }
     }
 }
