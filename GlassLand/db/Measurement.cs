@@ -28,7 +28,7 @@ namespace GlassLand.db
                 var measurement = new Measurement();
 
                 var sql = @"SELECT 
-                                m.Id as Id
+                                m.Id as Id,
 	                            m.CustomerName as CustomerName,
 	                            m.WindowWidth as WindowWidth,
 	                            m.WindowHeight as WindowHeight,
@@ -37,22 +37,20 @@ namespace GlassLand.db
 	                            e.Name as MeasurerName
                             FROM Measurements as m LEFT JOIN Employeers as e ON m.MeasurerId = e.Id";
 
-
-
                 var command = new SqlCommand(sql + $" WHERE m.Id = {id}", connection);
 
                 var reader = command.ExecuteReader();
 
                 while (reader.Read())
                 {
-                    measurement = new Measurement
+                    measurement = new Measurement()
                     {
-                        CustomerName = reader.GetString(0),
-                        WindowWidth = reader.GetDouble(1),
-                        WindowHeight = reader.GetDouble(2),
-                        Address = reader.GetString(3),
-                        Date = reader.GetDateTime(4),
-                        Measurer = reader.GetString(5)
+                        CustomerName = reader.GetString(1),
+                        WindowWidth = reader.GetDouble(2),
+                        WindowHeight = reader.GetDouble(3),
+                        Address = reader.GetString(4),
+                        Date = reader.GetDateTime(5),
+                        Measurer = reader.GetString(6)
                     };
                 }
 
@@ -95,7 +93,9 @@ namespace GlassLand.db
                     );
                     ";
 
+                
                 command = new SqlCommand(sql, connection);
+
                 if (command.ExecuteNonQuery() > 0)
                 {
                     reader.Close();

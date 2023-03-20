@@ -61,8 +61,6 @@
                 <ColumnDefinition Width="10"/>
                 <ColumnDefinition Width="150"/>
                 <ColumnDefinition Width="10"/>
-                <ColumnDefinition Width="150"/>
-                <ColumnDefinition Width="10"/>
             </Grid.ColumnDefinitions>
             <Button x:Name="CreateReport" Grid.Column="1" Click="CreateReport_Click" Content="Create Report" />
             <ComboBox
@@ -73,7 +71,6 @@
              />
             <Button x:Name="FilterItems" Grid.Column="5" Click="FilterItems_Click" Content="Filter" />
             <TextBlock x:Name="CompletedCount" Grid.Column="7" FontSize="20" HorizontalAlignment="Center" VerticalAlignment="Center">Completed: 0</TextBlock>
-            <TextBlock x:Name="CanceledCount" Grid.Column="9" FontSize="20" HorizontalAlignment="Center" VerticalAlignment="Center">Canceled: 0</TextBlock>
         </Grid>
     </Grid>
 </Page>

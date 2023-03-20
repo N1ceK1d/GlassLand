@@ -43,6 +43,7 @@
 
             <Button x:Name="acceptBtn" Click="acceptBtn_Click" Content="Accept" Margin="10 0"/>
             <Button x:Name="declineBtn" Click="declineBtn_Click" Content="Decline" Margin="10 0"/>
+            <Button x:Name="completeBtn" Click="completeBtn_Click" Content="Complete" Margin="10 0"/>
         </StackPanel>
     </Grid>
 </Page>

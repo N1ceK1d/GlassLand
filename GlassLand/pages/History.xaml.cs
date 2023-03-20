@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Runtime.Remoting.Messaging;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -29,10 +30,25 @@ namespace GlassLand.pages
             InitializeComponent();
             history = new ObservableCollection<db.History>(db.History.Find());
             historyList.ItemsSource = history;
-            CompletedCount.Text = $"Completed: {historyItem.getCount("Complete")}";
-            CanceledCount.Text = $"Canceled: {historyItem.getCount("Cancel")}";
-            List<string> items = new List<string>() { "All", "Completed", "Canceled" };
+            CompletedCount.Text = $"Completed: {historyItem.getCount("Completed")}";
+            List<string> items = new List<string>() { "All", "New", "Accepted", "Declined", "Completed" };
             StatusItems.ItemsSource = items;
+        }
+
+        private bool checkSelected()
+        {
+            if (StatusItems.SelectedItem == null)
+            {
+                MessageBox.Show("Please select item");
+                return false;
+            }
+            return true;
+        }
+
+        public void RefreshHistory()
+        {
+            history = new ObservableCollection<db.History>(db.History.Find());
+            historyList.ItemsSource = history;
         }
 
         private void CreateReport_Click(object sender, RoutedEventArgs e)
@@ -42,7 +58,11 @@ namespace GlassLand.pages
 
         private void FilterItems_Click(object sender, RoutedEventArgs e)
         {
-
+            if(checkSelected())
+            {
+                history = new ObservableCollection<db.History>(db.History.Filter(StatusItems.Text));
+                historyList.ItemsSource = history;
+            }
         }
     }
 }

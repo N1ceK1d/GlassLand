@@ -16,13 +16,14 @@ namespace GlassLand.db
         public string MasterName { get; set; }
         public string MeasurerName { get; set; }
         public string Window { get; set; }
-        public int WindowHeight { get; set; }
-        public int WindowWidth { get; set; }
+        public double WindowHeight { get; set; }
+        public double WindowWidth { get; set; }
         public string Status { get; set; }
         public DateTime Date { get; set; }
 
         public bool addHistory()
         {
+            
             using (var connection = Db.Connect())
             {
                 connection.Open();
@@ -32,20 +33,20 @@ namespace GlassLand.db
                 var sql = $@"SET DATEFORMAT dmy;
                     INSERT INTO History 
                     VALUES (
-                    '{CustomerName}', {Address}, {MasterName}, {MeasurerName}, '{Window}', {WindowHeight}, {WindowWidth}, '{Status}', '{now_date}'
+                    '{CustomerName}', '{Address}', '{MasterName}', '{MeasurerName}', '{Window}', {WindowHeight}, {WindowWidth}, '{Status}', '{now_date}'
                     );
                     ";
 
                 var command = new SqlCommand(sql, connection);
 
-                var reader = command.ExecuteReader();
+                //var reader = command.ExecuteReader();
 
                 if (command.ExecuteNonQuery() > 0)
                 {
-                    reader.Close();
+                    //reader.Close();
                     return true;
                 }
-                reader.Close();
+                //reader.Close();
                 return false;
             }
         }
@@ -56,8 +57,15 @@ namespace GlassLand.db
             {
                 connection.Open();
                 var histories = new List<db.History>();
+                var sql = "";
 
-                var sql = $@"SELECT COUNT(Status) FROM History as h Where Status = '{Status}'";
+                if (Status != "All")
+                {
+                    sql = $@"SELECT COUNT(Status) FROM History as h Where Status = '{Status}'";
+                } else
+                {
+                    sql = $@"SELECT COUNT(Id) FROM Measurements as h";
+                }
 
                 var command = new SqlCommand(sql, connection);
 
@@ -75,6 +83,87 @@ namespace GlassLand.db
                 return count;
             }
         }
+
+        public static List<db.History> Filter(string Status)
+        {
+            using (var connection = Db.Connect())
+            {
+                connection.Open();
+                var histories = new List<db.History>();
+
+                var sql = "";
+                    
+                //     $@"SELECT 
+                //     Id,
+                //     CustomerName,
+                //     Address,
+                //     MasterName,
+                //     MeasurerName,
+                //     Window,
+                //     WindowHeight,
+                //     WindowWidth,
+                //     Status,
+                //     Date
+                // FROM History
+                // Where Status = '{Status}';";
+
+                if (Status != "All")
+                {
+                    sql = $@"SELECT 
+                        Id,
+                        CustomerName,
+                        Address,
+                        MasterName,
+                        MeasurerName,
+                        Window,
+                        WindowHeight,
+                        WindowWidth,
+                        Status,
+                        Date
+                    FROM History
+                    Where Status = '{Status}';";
+                }
+                else
+                {
+                    sql = $@"SELECT 
+                    Id,
+                    CustomerName,
+                    Address,
+                    MasterName,
+                    MeasurerName,
+                    Window,
+                    WindowHeight,
+                    WindowWidth,
+                    Status,
+                    Date
+                    FROM History;";
+                }
+
+                var command = new SqlCommand(sql, connection);
+
+                var reader = command.ExecuteReader();
+
+                while (reader.Read())
+                {
+                    histories.Add(new db.History
+                    {
+                        CustomerName = reader.GetString(1),
+                        Address = reader.GetString(2),
+                        MasterName = reader.GetString(3),
+                        MeasurerName = reader.GetString(4),
+                        Window = reader.GetString(5),
+                        WindowHeight = reader.GetInt32(6),
+                        WindowWidth = reader.GetInt32(7),
+                        Status = reader.GetString(8),
+                        Date = reader.GetDateTime(9)
+                    });
+                }
+
+                reader.Close();
+
+                return histories;
+            }
+        }
         public static List<db.History> Find()
         {
             using (var connection = Db.Connect())
@@ -83,17 +172,17 @@ namespace GlassLand.db
                 var histories = new List<db.History>();
 
                 var sql = @"SELECT 
-Id,
-CustomerName,
-Address,
-MasterName,
-MeasurerName,
-Window,
-WindowHeight,
-WindowWidth,
-Status,
-Date
-FROM History;";
+                    Id,
+                    CustomerName,
+                    Address,
+                    MasterName,
+                    MeasurerName,
+                    Window,
+                    WindowHeight,
+                    WindowWidth,
+                    Status,
+                    Date
+                    FROM History;";
 
                 var command = new SqlCommand(sql, connection);
 
