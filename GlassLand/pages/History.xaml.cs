@@ -30,9 +30,9 @@ namespace GlassLand.pages
             InitializeComponent();
             history = new ObservableCollection<db.History>(db.History.Find());
             historyList.ItemsSource = history;
-            CompletedCount.Text = $"Completed: {historyItem.getCount("Completed")}";
             List<string> items = new List<string>() { "All", "New", "Accepted", "Declined", "Completed" };
             StatusItems.ItemsSource = items;
+            CompletedCount.Text = $"Completed: {db.History.getCount()}";
         }
 
         private bool checkSelected()
@@ -49,6 +49,11 @@ namespace GlassLand.pages
         {
             history = new ObservableCollection<db.History>(db.History.Find());
             historyList.ItemsSource = history;
+        }
+
+        public void RefreshCount()
+        {
+            CompletedCount.Text = $"Completed: {db.History.getCount()}";
         }
 
         private void CreateReport_Click(object sender, RoutedEventArgs e)

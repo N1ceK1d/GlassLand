@@ -56,13 +56,13 @@ namespace GlassLand.pages
                 RefreshList();
                 var history = new db.History()
                 {
-                    CustomerName = Measurement.FindOne(m.Id).CustomerName,
-                    Address = Measurement.FindOne(m.Id).Address,
+                    CustomerName = m.Measurement.CustomerName,
+                    Address = m.Measurement.Address,
                     MasterName = m.Master,
-                    MeasurerName = Measurement.FindOne(m.Id).Measurer,
+                    MeasurerName = Measurement.FindOne(m.Measurement.Id).Measurer,
                     Window = m.Window,
-                    WindowHeight = Convert.ToInt32(Measurement.FindOne(m.Id).WindowHeight),
-                    WindowWidth = Convert.ToInt32(Measurement.FindOne(m.Id).WindowWidth),
+                    WindowHeight = Convert.ToInt32(m.Measurement.WindowHeight),
+                    WindowWidth = Convert.ToInt32(m.Measurement.WindowWidth),
                     Status = "Declined",
                     Date = (m.Date != null) ? m.Date : DateTime.Now
                 };
@@ -80,13 +80,13 @@ namespace GlassLand.pages
                 RefreshList();
                 var history = new db.History()
                 {
-                    CustomerName = Measurement.FindOne(m.Id).CustomerName,
-                    Address = Measurement.FindOne(m.Id).Address,
+                    CustomerName = m.Measurement.CustomerName,
+                    Address = m.Measurement.Address,
                     MasterName = m.Master,
-                    MeasurerName = Measurement.FindOne(m.Id).Measurer,
+                    MeasurerName = Measurement.FindOne(m.Measurement.Id).Measurer,
                     Window = m.Window,
-                    WindowHeight = Convert.ToInt32(Measurement.FindOne(m.Id).WindowHeight),
-                    WindowWidth = Convert.ToInt32(Measurement.FindOne(m.Id).WindowWidth),
+                    WindowHeight = Convert.ToInt32(m.Measurement.WindowHeight),
+                    WindowWidth = Convert.ToInt32(m.Measurement.WindowWidth),
                     Status = "Accepted",
                     Date = (m.Date != null) ? m.Date : DateTime.Now
                 };
@@ -102,20 +102,26 @@ namespace GlassLand.pages
                 var m = montagesList.SelectedItem as Montage;
                 m.UpdateStatus("Completed");
                 RefreshList();
+
                 var history = new db.History()
                 {
-                    CustomerName = Measurement.FindOne(m.Id).CustomerName,
-                    Address = Measurement.FindOne(m.Id).Address,
+                    CustomerName = m.Measurement.CustomerName,
+                    Address = m.Measurement.Address,
                     MasterName = m.Master,
-                    MeasurerName = Measurement.FindOne(m.Id).Measurer,
+                    MeasurerName = Measurement.FindOne(m.Measurement.Id).Measurer, 
                     Window = m.Window,
-                    WindowHeight = Convert.ToInt32(Measurement.FindOne(m.Id).WindowHeight),
-                    WindowWidth = Convert.ToInt32(Measurement.FindOne(m.Id).WindowWidth),
+                    WindowHeight = Convert.ToInt32(m.Measurement.WindowHeight),
+                    WindowWidth = Convert.ToInt32(m.Measurement.WindowWidth),
                     Status = "Completed",
                     Date = (m.Date != null) ? m.Date : DateTime.Now
                 };
+
                 history.addHistory();
+
                 MainMenu.historyView.RefreshHistory();
+                MainMenu.historyView.RefreshCount();
+                m.removeMontage();
+                RefreshList();
             }
         }
     }

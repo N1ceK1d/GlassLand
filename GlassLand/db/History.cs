@@ -51,22 +51,14 @@ namespace GlassLand.db
             }
         }
 
-        public int getCount(string Status)
+        public static int getCount()
         {
             using (var connection = Db.Connect())
             {
                 connection.Open();
                 var histories = new List<db.History>();
-                var sql = "";
-
-                if (Status != "All")
-                {
-                    sql = $@"SELECT COUNT(Status) FROM History as h Where Status = '{Status}'";
-                } else
-                {
-                    sql = $@"SELECT COUNT(Id) FROM Measurements as h";
-                }
-
+                var sql = $@"SELECT COUNT(Status) FROM History as h Where Status = 'Completed'";
+                
                 var command = new SqlCommand(sql, connection);
 
                 var reader = command.ExecuteReader();
