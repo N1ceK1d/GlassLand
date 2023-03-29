@@ -3,6 +3,7 @@ using GlassLand.views;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -51,16 +52,22 @@ namespace GlassLand.pages
         private void removeMeasurer_Click(object sender, RoutedEventArgs e)
         {
             var m = this.meausurerList.SelectedItem as Measurer;
-
-            if (m != null)
+            try
             {
-                Measurer.removeMeasurer(m.Id);
-                MainMenu.measurersView.refreshMeasurers();
-            }
-            else
+                if (m != null)
+                {
+                    Measurer.removeMeasurer(m.Id);
+                    MainMenu.measurersView.refreshMeasurers();
+                }
+                else
+                {
+                    MessageBox.Show("Please select measure to remove measurer");
+                }
+            } catch(SqlException ex)
             {
-                MessageBox.Show("Please select measure to remove measurer");
+                MessageBox.Show("Can't be deleted! The mesurer is already busy");
             }
+            
         }
     }
 }

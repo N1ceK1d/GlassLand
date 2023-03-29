@@ -41,18 +41,25 @@ namespace GlassLand.views
             } 
             else
             {
-                var customer = new Measurement()
+                try
                 {
-                    CustomerName = customerName.Text,
-                    Measurer = measurerTb.Text,
-                    WindowHeight = Convert.ToInt32(windowHeight.Text),
-                    WindowWidth = Convert.ToInt32(windowWidth.Text),
-                    Address = address.Text,
-                    Date = (dateTb.SelectedDate != null) ? (DateTime)dateTb.SelectedDate : DateTime.Now,
-                };
-                customer.addMeasurment();
+                    var customer = new Measurement()
+                    {
+                        CustomerName = customerName.Text,
+                        Measurer = measurerTb.Text,
+                        WindowHeight = Convert.ToInt32(windowHeight.Text),
+                        WindowWidth = Convert.ToInt32(windowWidth.Text),
+                        Address = address.Text,
+                        Date = (dateTb.SelectedDate != null) ? (DateTime)dateTb.SelectedDate : DateTime.Now,
+                    };
+                    customer.addMeasurment();
 
-                MainMenu.measurementsView.RefreshMeasurementList();
+                    MainMenu.measurementsView.RefreshMeasurementList();
+                } catch (Exception ex)
+                {
+                    MessageBox.Show("Error! Incorrect data entered");
+                }
+                
             }
         }
     }

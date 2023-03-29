@@ -6,6 +6,7 @@ using System.Linq;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace GlassLand.db
 {
@@ -63,6 +64,7 @@ namespace GlassLand.db
 
         public  bool addMeasurment()
         {
+
             using (var connection = Db.Connect())
             {
                 connection.Open();
@@ -93,7 +95,7 @@ namespace GlassLand.db
                     );
                     ";
 
-                
+
                 command = new SqlCommand(sql, connection);
 
                 if (command.ExecuteNonQuery() > 0)
@@ -102,6 +104,7 @@ namespace GlassLand.db
                     return true;
                 }
                 reader.Close();
+
                 return false;
             }
         }
