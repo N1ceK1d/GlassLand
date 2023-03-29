@@ -20,10 +20,7 @@
                    ScrollViewer.HorizontalScrollBarVisibility="Disabled"
   >
             <ListView.View >
-                <GridView >
-                    <GridViewColumn
-                        DisplayMemberBinding="{Binding Id}"
-                        Header="Id" />
+                <GridView>
                     <GridViewColumn
                         DisplayMemberBinding="{Binding Name}"
                         Header="Name" />
